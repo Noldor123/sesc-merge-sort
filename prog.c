@@ -1,54 +1,77 @@
-#include <stdlib.h> 
-#include <stdio.h> 
-//#include <math.h> 
+#include<stdlib.h> 
+#include<stdio.h> 
+  
+void merge(int arr[], int l, int m, int r) 
+{ 
+    int i, j, k; 
+    int n1 = m - l + 1; 
+    int n2 =  r - m; 
+  
+    int L[n1], R[n2]; 
+  
+    for (i = 0; i < n1; i++) 
+        L[i] = arr[l + i]; 
+    for (j = 0; j < n2; j++) 
+        R[j] = arr[m + 1+ j]; 
 
-//int randomad = 0; 
-
-void DebugArr(int * arr, int n){ 
-for (int i = 0; i < n; i++) 
-printf("%d ", arr[i]); 
-printf("\n"); 
+    i = 0; 
+    j = 0; 
+    k = l;
+    while (i < n1 && j < n2) 
+    { 
+        if (L[i] <= R[j]) 
+        { 
+            arr[k] = L[i]; 
+            i++; 
+        } 
+        else
+        { 
+            arr[k] = R[j]; 
+            j++; 
+        } 
+        k++; 
+    } 
+  
+    while (i < n1) 
+    { 
+        arr[k] = L[i]; 
+        i++; 
+        k++; 
+    } 
+  
+    while (j < n2) 
+    { 
+        arr[k] = R[j]; 
+        j++; 
+        k++; 
+    } 
 } 
-
-int* merge(int *elementA, int *elementB, int lengthA, int lengthB) { 
-printf("%d \n", lengthA + lengthB); 
-int *too = (int*)malloc(sizeof(int) * (lengthA + lengthB)); 
-int a = 0; 
-int b = 0; 
-for (int i = 0; i < lengthA + lengthB;) { 
-if (a < lengthA && elementA[a] >= elementB[b]) 
-too[i++] = elementA[a++]; 
-
-if (b >= lengthB) 
-too[i++] = elementA[a++]; 
-
-if (a >= lengthA) 
-too[i++] = elementB[b++]; 
-
-if (b < lengthB && elementB[b] >= elementA[a]) 
-too[i++] = elementB[b++]; 
+  
+void mergeSort(int arr[], int l, int r) 
+{ 
+    if (l < r) 
+    { 
+        int m = l+(r-l)/2; 
+        mergeSort(arr, l, m); 
+        mergeSort(arr, m+1, r); 
+  
+        merge(arr, l, m, r); 
+    } 
 } 
-return too; 
-} 
+  
+int main() 
+{   
+  int N; 
+  scanf("%d", &N); 
+  int *arr = (int*)malloc(sizeof(int) * N); 
+  
+  for (int i = 0; i < N; i++) 
+    scanf("%d", &arr[i]); 
 
-int* sort(int * mass, int length){ 
-if(length == 1){ 
-return mass; 
+  mergeSort(arr, 0, N - 1);  
+ 
+  for (int i = N-1; i >= 0; i--) 
+    printf("%d ", arr[i]); 
+  free(arr);
+  return 0; 
 } 
-//printf("%d \n", randomad++); 
-return merge(&(sort(&mass[0], length/2)[0]), &(sort(&mass[length/2], length - length/2)[0]), length/2, length - length/2); 
-} 
-
-int main(void) { 
-int n; 
-scanf("%d", &n); 
-//printf("%d \n", randomad++); 
-int *arr = (int*)malloc(sizeof(int) * n); 
-//printf("%d \n", randomad++); 
-for (int i = 0; i < n; i++) 
-scanf("%d", &arr[i]); 
-arr = sort(&arr[0], n); 
-DebugArr(arr, n); 
-//free(arr); 
-return 0; 
-}
