@@ -1,5 +1,5 @@
-run: sesc-merge-sort
-	./sesc-merge-sort
-myt: sesc-merge-sort.c
-	gcc -Wall -std=c11 sesc-merge-sort.c -o sesc-merge-sort
-build: sesc-merge-sort
+run: prog
+	./prog
+prog: prog.c
+	gcc -Wall -std=c11 prog.c -o prog
+build: prog
