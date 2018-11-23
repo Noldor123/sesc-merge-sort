@@ -36,7 +36,6 @@ if(length == 1){
 return mass; 
 } 
 //printf("%d \n", randomad++); 
-int midle = length/2; 
 return merge(&(sort(&mass[0], length/2)[0]), &(sort(&mass[length/2], length - length/2)[0]), length/2, length - length/2); 
 } 
 
